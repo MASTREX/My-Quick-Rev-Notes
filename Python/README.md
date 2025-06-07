@@ -144,6 +144,52 @@ difference = date(2025, 6, 10) - date(2025, 6, 7)  # timedelta(days=3)
 ---
 
 
+## logging
+The `logging` module in Python provides a flexible framework for emitting log messages from Python programs. It is used to track events that happen when some software runs, which can help in debugging and monitoring.
+
+### Key Features
+
+- **Multiple Severity Levels:** Logs can be emitted at different levels: `DEBUG`, `INFO`, `WARNING`, `ERROR`, and `CRITICAL`.
+- **Configurable Handlers:** Logs can be directed to different outputs like console, files, or remote servers using handlers (`StreamHandler`, `FileHandler`, etc.).
+- **Formatters:** Control the layout of log messages (timestamps, log level, message, etc.).
+- **Hierarchical Loggers:** Supports multiple loggers with parent-child relationships, allowing granular control.
+- **Thread-safe:** Can be safely used in multi-threaded applications.
+
+### Basic Usage Example
+
+```python
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.info("This is an info message")
+logging.error("This is an error message")
+```
+
+### Common Components
+- `Logger`: Entry point for logging messages (`logging.getLogger(__name__)`).
+- `Handler`: Sends the log records to destinations (console, files).
+- `Formatter`: Specifies the layout of the log message.
+- `Filter`: Provides finer grained control over which log records to output.
+
+#### Why Use logging Instead of print?
+- Supports severity levels.
+- Easy to enable/disable or route output without changing code.
+- Provides timestamps and contextual information.
+- Can be configured via code or config files.
+
+### Best Practice for Multi-Module Logging
+
+1. **Configure Logging Once (Usually in the Main Entry Point)**
+   Set up logging configuration (handlers, formatters, levels) only once, typically in your main script or a dedicated config module.
+
+2. **Get Loggers by Name in Each Module**
+   Each module calls `logging.getLogger(__name__)` to get a logger specific to that module’s namespace.
+
+3. **Let Loggers Propagate to the Root Logger**
+   By default, child loggers propagate messages to the root logger, which handles the output.
+---
+
+
 ## asyncio
 - At `await` keyword the code is blocked in a non blocking way and other things in eventloop are excuted until this function is done.
 ```python
