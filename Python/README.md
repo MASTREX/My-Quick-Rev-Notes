@@ -39,6 +39,9 @@ say_hello("Alice")
 
 ```
 
+---
+---
+
 # Basic Modules
 ## os
 The `os` module in Python provides a way of using operating system-dependent functionality like reading or writing to the file system, managing directories, and interacting with environment variables. It acts as a bridge between Python and the underlying OS.
@@ -71,6 +74,74 @@ The `os` module in Python provides a way of using operating system-dependent fun
 - `os.linesep` – Returns the line separator (`'\n'`, `'\r\n'`, etc.).
 - `os.path.abspath(path)` – Returns the absolute path.
 
+---
+
+
+## datetime
+The `datetime` module in Python provides classes for manipulating dates and times in both simple and complex ways.
+
+### Key Classes
+
+- **`datetime.date`**: Handles **dates** (year, month, day).
+- **`datetime.time`**: Handles **time** (hour, minute, second, microsecond).
+- **`datetime.datetime`**: Combines `date` and `time`.
+- **`datetime.timedelta`**: Represents the **difference** between two dates or times.
+- **`datetime.tzinfo`**: Base class for dealing with **time zones**.
+- **`datetime.timezone`**: A concrete subclass of `tzinfo` for fixed offset time zones.
+
+### Usage of datetime
+```python
+d = date(2025, 6, 7)  # year, month, day
+t = time(14, 30, 0)   # hour, minute, second
+dt = datetime(2025, 6, 7, 14, 30)
+
+# Current Date and Time
+now = datetime.now()           # local current datetime
+utc_now = datetime.utcnow()    # current UTC datetime
+today = date.today()           # current date
+
+# Formatting
+formatted = dt.strftime("%Y-%m-%d %H:%M:%S")
+parsed = datetime.strptime("2025-06-07", "%Y-%m-%d")
+
+# timedelta (date arithmatic)
+delta = timedelta(days=5)
+future_date = date.today() + delta
+difference = date(2025, 6, 10) - date(2025, 6, 7)  # timedelta(days=3)
+```
+
+### datetime formats
+
+| Code | Meaning                      | Example           |
+|------|------------------------------|-------------------|
+| `%Y` | Year with century            | `2025`            |
+| `%y` | Year without century (00–99) | `25`              |
+| `%m` | Month (01–12)                | `06`              |
+| `%B` | Full month name              | `June`            |
+| `%b` | Abbreviated month name       | `Jun`             |
+| `%d` | Day of the month (01–31)     | `07`              |
+| `%A` | Full weekday name            | `Saturday`        |
+| `%a` | Abbreviated weekday name     | `Sat`             |
+| `%H` | Hour (24-hour clock, 00–23)  | `14`              |
+| `%I` | Hour (12-hour clock, 01–12)  | `02`              |
+| `%p` | AM/PM                        | `PM`              |
+| `%M` | Minute (00–59)               | `30`              |
+| `%S` | Second (00–59)               | `45`              |
+| `%f` | Microsecond (000000–999999)  | `123456`          |
+| `%z` | UTC offset                   | `+0000` or `-0500`|
+| `%Z` | Time zone name               | `UTC`, `EST`      |
+| `%j` | Day of the year (001–366)    | `158`             |
+| `%U` | Week number (Sunday first)   | `23`              |
+| `%W` | Week number (Monday first)   | `22`              |
+| `%c` | Locale date and time         | `Sat Jun  7 14:30:00 2025` |
+| `%x` | Locale date                  | `06/07/25`        |
+| `%X` | Locale time                  | `14:30:00`        |
+
+> ### Notes
+  - `datetime` objects can be **naive** (no timezone) or **aware** (with timezone).
+  - Always prefer timezone-aware datetimes in applications dealing with multiple time zones.
+
+---
 
 
 ## asyncio
