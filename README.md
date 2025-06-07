@@ -1,4 +1,7 @@
 > These notes are for my own personal use. Half of them are incomplete as most of the things are in my mind and these notes custom made for me.
+
+> Start using "GPT" to generate notes for me. Time saving and error free. Use this prompt ***give me the brief but rich explanation of python datetime module for my notes in raw markdown format***. Can also pass a sample from my notes to have consistent format.
+
 # MyNotes
 Notes for various languages
 
