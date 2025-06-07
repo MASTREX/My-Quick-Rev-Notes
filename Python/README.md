@@ -39,6 +39,40 @@ say_hello("Alice")
 
 ```
 
+# Basic Modules
+## os
+The `os` module in Python provides a way of using operating system-dependent functionality like reading or writing to the file system, managing directories, and interacting with environment variables. It acts as a bridge between Python and the underlying OS.
+
+### 📁 File and Directory Management
+- `os.getcwd()` – Returns the current working directory.
+- `os.chdir(path)` – Changes the current working directory.
+- `os.listdir(path='.')` – Lists files and directories in the given path.
+- `os.mkdir(path)` – Creates a new directory.
+- `os.makedirs(path)` – Recursively creates directories.
+- `os.remove(path)` – Deletes a file.
+- `os.rmdir(path)` – Removes an empty directory.
+- `os.rename(src, dst)` – Renames a file or directory.
+- `os.path` – Submodule for file path manipulations (e.g., `os.path.join()`, `os.path.exists()`).
+> **Tip:** Use `pathlib` (Python 3.4+) for a more modern and object-oriented approach to file paths.
+
+### 🌍 Environment Variables
+- `os.environ` – A dictionary representing the environment variables.
+- `os.getenv(key, default=None)` – Gets the value of an environment variable.
+- `os.putenv(key, value)` – Sets an environment variable (note: not always persistent across subprocesses).
+
+### 🛠️ Process Management
+- `os.system(command)` – Runs a shell command.
+- `os.startfile(path)` *(Windows only)* – Opens a file with its associated application.
+- `os.exec*()` – Replaces the current process with a new one.
+
+### 📊 Useful Constants and Info
+- `os.name` – Returns `'posix'`, `'nt'`, etc., depending on the OS.
+- `os.sep` – Returns the path separator (`'/'` on Unix, `'\\'` on Windows).
+- `os.linesep` – Returns the line separator (`'\n'`, `'\r\n'`, etc.).
+- `os.path.abspath(path)` – Returns the absolute path.
+
+
+
 ## asyncio
 - At `await` keyword the code is blocked in a non blocking way and other things in eventloop are excuted until this function is done.
 ```python
