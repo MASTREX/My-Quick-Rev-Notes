@@ -137,6 +137,7 @@ readonly AGE		# marks the variable as readonly
 unset AGE
 
 func() {
+  # local variable is only applicable in the function scope
 	local AGE=25		# local variable (by default variables are global)
 }
 ```
@@ -243,10 +244,6 @@ ${#array[@]}	Array length
 
 # Conditionals
 
-- `[condition]` : file string operation
-- `[[condition]]` : combining multiple conditions and handling regex pattern
-- `((condition))` : for arithmatic operation
-
 > - conditon is an expression that evaluates to `true` or `false`
 > - Space is required before and after `[` and `]`
 > - A semicolon before then is required
@@ -314,9 +311,10 @@ ${#array[@]}	Array length
 [[ ${arg1} -gt ${arg2} ]]  # >
 [[ ${arg1} -ge ${arg2} ]]  # >=
 
-# AND / OR
-[[ test_case_1 ]] && [[ test_case_2 ]] # And
-[[ test_case_1 ]] || [[ test_case_2 ]] # Or
+# AND / OR / NOT
+[[ test_case_1 && test_case_2 ]] # And
+[[ test_case_1 || test_case_2 ]] # Or
+[[ ! test_condition ]] # Not
 
 # returns true if the command was successful without any errors
 [[ $? -eq 0 ]]
@@ -467,4 +465,24 @@ function hello() {
  echo "Hello $1!"
 }
 hello DevDojo
+```
+
+
+------------
+# Scripting
+## Set command
+Use to change shell properties and behaviour
+- `-e`: errexit : fast-failing : Exit immediately if a commands fail with non zero status
+- `-u`: nounset : Treat unset variable as an error and exit
+- `-o <option>` : enable option   `+o <option>` : disable option
+  - `pipefail`: return the exit status of last failed command
+  - `allexport`: Automatically export all variables as soon as they are defined
+
+```bash
+set -euo pipefail;
+
+# OR
+set -o allexport
+source .env
+set +o allexport
 ```
