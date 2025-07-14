@@ -13,8 +13,17 @@ Bash: bourne again shell (enhanced version of shell)
 - `touch`: Create an empty file.
 - `cat`: Concatenate and display files.
 - `grep`: Search text patterns.
+- `find`: to find with matching a pattern or criteria
+
+  syntax: `find <path> [options value [options value]...]`
+  ```bash
+  find ~/Documents/ -iname "*txt" -type f,l -maxdepth 1 -perm 0600 -exec grep -Hi penguin {} \;
+  ```
 - `chmod`: Change file permissions.
 - `chown`: Change file owner and group.
+- `xargs`: Construct an argument list from stdin and run a command
+
+  syntax: `...stdin... | xargs -n 100 -P 2 chmod 775`
 - `read`: Take user input
 - `basename` and `dirname`: basename gives the filename and dirname give the dir path from complete file path
   ```bash
@@ -114,6 +123,8 @@ Bash: bourne again shell (enhanced version of shell)
 - if a variable is passed like this `ENV_VAR=value executable param1 param2` then it is defined for the period of that command execution only.
 - when we defined a env variable using `export` then it is pass to all sub or child process called from that environment
 
+
+
 # Variables
 ```bash
 # you can not have spaces before and after the = sign.
@@ -126,6 +137,7 @@ readonly AGE		# marks the variable as readonly
 unset AGE
 
 func() {
+  # local variable is only applicable in the function scope
 	local AGE=25		# local variable (by default variables are global)
 }
 ```
@@ -136,7 +148,7 @@ if parameter are passed to the command like this `./myscript.sh para1 para2!` th
 - $@: for all parameter
 - $0: reference the script itself (can be used to self destruct by `rm -f $0` in the script)
 
-# take input
+# take input with 'read'
 `-p` is use for prompt msg
 `-r` disable escape backslash
 `-s` Does not echo user's input
@@ -160,6 +172,36 @@ echo "Welcome to DevDojo!"
 
 
 `printenv` or `env` for getting environment variables. Variables are case sensitive
+
+# Special Characters
+#### Wildcards
+   - `?` single character
+   - `*` mulitiple character
+   - `[]` character set
+
+#### Command seperator
+   - `;` executes each even if previous one fails
+   - `&&` stops if previous one fails
+
+#### Background Process
+   - `command &` executes the command in background and return the process ID
+
+#### Input redirection
+   - To take file as input through stream use left-angle bracket `<`
+   - ex: `sort < words.txt`
+
+#### Output redirection
+   - Use the right-angle bracket `>` to redirect the output from a command (typically, into a file);
+   - ex: `ls > files.txt`
+   - use digit 2 to redirect errors. `2>/dev/null` directs error to null
+
+#### Pipe
+   - `|` chains commands together. It takes the output from one command and feeds it to the next as input.
+
+> To use special character as it is use single quotes arround them or use backslash
+> <br>example: `echo 'Today is $(date)'`
+> <br>example: `echo "Today is \$(date)"`
+
 
 # Comments
 ```bash
@@ -201,10 +243,6 @@ ${#array[@]}	Array length
 ```
 
 # Conditionals
-
-- `[condition]` : file string operation
-- `[[condition]]` : combining multiple conditions and handling regex pattern
-- `((condition))` : for arithmatic operation
 
 > - conditon is an expression that evaluates to `true` or `false`
 > - Space is required before and after `[` and `]`
@@ -273,9 +311,10 @@ ${#array[@]}	Array length
 [[ ${arg1} -gt ${arg2} ]]  # >
 [[ ${arg1} -ge ${arg2} ]]  # >=
 
-# AND / OR
-[[ test_case_1 ]] && [[ test_case_2 ]] # And
-[[ test_case_1 ]] || [[ test_case_2 ]] # Or
+# AND / OR / NOT
+[[ test_case_1 && test_case_2 ]] # And
+[[ test_case_1 || test_case_2 ]] # Or
+[[ ! test_condition ]] # Not
 
 # returns true if the command was successful without any errors
 [[ $? -eq 0 ]]
@@ -426,4 +465,24 @@ function hello() {
  echo "Hello $1!"
 }
 hello DevDojo
+```
+
+
+------------
+# Scripting
+## Set command
+Use to change shell properties and behaviour
+- `-e`: errexit : fast-failing : Exit immediately if a commands fail with non zero status
+- `-u`: nounset : Treat unset variable as an error and exit
+- `-o <option>` : enable option   `+o <option>` : disable option
+  - `pipefail`: return the exit status of last failed command
+  - `allexport`: Automatically export all variables as soon as they are defined
+
+```bash
+set -euo pipefail;
+
+# OR
+set -o allexport
+source .env
+set +o allexport
 ```
