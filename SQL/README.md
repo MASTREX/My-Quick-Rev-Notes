@@ -41,7 +41,7 @@ Some of The Most Important SQL Commands
 <br>
 
 > ### Order of writing
-`SELECT > WHERE > GROUP BY > Group by FUNCTIONS > HAVING > ORFER BY`
+`SELECT > WHERE > GROUP BY > Group by FUNCTIONS > HAVING > ORDER BY`
 > ### Order of Execution
 | ORDER | CLAUSE | FUNCTION |
 |-|-|-|
@@ -94,11 +94,37 @@ Some of The Most Important SQL Commands
 	FROM table_name
 	ORDER BY column1, column2, ... ASC|DESC;
 	```
+
 	Example: The following SQL statement selects all customers from the `Customers` table, sorted by the `Country` and the `CustomerName` column. This means that it orders by Country, but if some rows have the same Country, it orders them by CustomerName:
 	```SQL
 	SELECT * FROM Customers
 	ORDER BY Country ASC, CustomerName DESC;
 	```
+    > Handling NULL Values in ORDER BY Across Databases
+
+	If a column contains NULL values, it will be treated differently by different databases.
+
+    #### IN MYSQL
+	```SQL
+    ORDER BY column ASC → NULLs come first.
+    ORDER BY column DESC → NULLs come last.
+
+	<!-- To force NULLs at the end while sorting ascending: -->
+    SELECT * FROM your_table
+    ORDER BY your_column IS NULL, your_column ASC;
+	```
+
+    #### IN POSTGRES
+
+	```SQL
+	ORDER BY column ASC → NULLs come first.
+    ORDER BY column DESC → NULLs come last.
+
+    <!-- To force NULLs at the end while sorting ascending: -->
+    SELECT * FROM your_table
+    ORDER BY your_column ASC NULLS LAST;
+	```
+
 
 1. ### INSERT INTO
 	```SQL
@@ -149,7 +175,14 @@ Some of The Most Important SQL Commands
 	```
 
 1. ### HAVING
-	To filter subset or groups of `GROUP BY`
+	To filter subset or groups of `GROUP BY`. For conditional after grouping or aggregation
+
+    Example: To find out if multiple Emails exists in customer table corresponding to a customer_id.
+
+	```SQL
+    SELECT customer_id FROM tbl_customers GROUP BY customer_id HAVING COUNT(customer_email)>1;
+	```
+
 
 1. ### UNION
 	The `UNION` operator is used to combine the result-set of two or more `SELECT` statements.
