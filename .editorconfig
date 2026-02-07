@@ -1,0 +1,10 @@
+# Standard editorconfig properties
+[*]
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Settings for md files
+[**.md]
+indent_style = space
+indent_size = 2
