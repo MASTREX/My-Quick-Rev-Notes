@@ -12,7 +12,6 @@ Notes for various languages
 
 <br>
 
-- [CSS](/CSS/README.md)
 - [JavaScript](/JavaScript/README.md)
 
 ## Other things

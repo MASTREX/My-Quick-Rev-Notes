@@ -14,6 +14,7 @@ Bash: bourne again shell (enhanced version of shell)
 - `cat`: Concatenate and display files.
 - `grep`: Search text patterns.
 - `find`: to find with matching a pattern or criteria
+- `locate`: to find the location of certain file name pattern
 
   syntax: `find <path> [options value [options value]...]`
   ```bash
@@ -53,7 +54,7 @@ Bash: bourne again shell (enhanced version of shell)
 - `ping`: Test network connectivity.
 ## Package Management:
 - `apt-get` (or `apt`): Package manager for Debian-based systems.
-- `yum`: Package manager for Red Hat-based systems.
+- `yum` or `dnf`: Package manager for Red Hat-based systems.
 - `pip`: Package installer for Python.
 - `npm`: Package manager for Node.js.
 - `composer`: Dependency manager for PHP.
@@ -62,7 +63,6 @@ Bash: bourne again shell (enhanced version of shell)
 - `svn`: Subversion version control system.
 ## Automation and Scripting:
 - `cron`: Job scheduler.
-- ***bash scripts***: Writing and executing bash scripts for automation.
 ## Networking:
 - `ssh`: Secure shell for remote access.
 - `scp`: Securely copy files between hosts.
@@ -87,28 +87,6 @@ Bash: bourne again shell (enhanced version of shell)
 - `sort`: Sort lines of text files.
 - `uniq`: Report or omit repeated lines.
 - `tr`: Translate or delete characters.
-## Docker and Containers:
-- `docker`: Containerization platform.
-- `docker-compose`: Define and run multi-container Docker applications.
-## Deployment and Configuration Management:
-- `ansible`: Configuration management and deployment tool.
-- `chef`: Infrastructure automation framework.
-- `puppet`: Configuration management tool.
-- `terraform`: Infrastructure as code tool.
-## Continuous Integration/Continuous Deployment (CI/CD):
-- `jenkins`: Automation server for CI/CD pipelines.
-- `gitlab-ci`: CI/CD integrated with GitLab.
-- `travis-ci`: CI service for GitHub projects.
-- `circle-ci`: CI/CD platform for continuous integration and delivery.
-## Cloud Computing:
-- `aws-cli`: AWS Command Line Interface.
-- `gcloud`: Google Cloud SDK.
-- `az-cli`: Azure Command-Line Interface.
-## Logging and Monitoring:
-- `prometheus`: Monitoring and alerting toolkit.
-- `grafana`: Metrics dashboard and graph editor.
-- `elasticsearch`: Distributed search and analytics engine.
-- `kibana`: Data visualization dashboard for Elasticsearch.
 ## Security:
 - `nmap`: Network exploration tool and security scanner.
 - `fail2ban`: Intrusion prevention software.
@@ -116,6 +94,7 @@ Bash: bourne again shell (enhanced version of shell)
 - `curl`: Transfer data from or to a server.
 - `tmux`: Terminal multiplexer.
 - `jq`: Command-line JSON processor.
+- `yq`: Command-line yaml processor.
 ----------------------
 
 # Important points
@@ -135,6 +114,8 @@ echo ${AGE}		# good practice standard
 
 readonly AGE		# marks the variable as readonly
 unset AGE
+
+Variable expansion happens inside "" but not in ''
 
 func() {
   # local variable is only applicable in the function scope
@@ -316,6 +297,7 @@ ${#array[@]}	Array length
 [[ test_case_1 || test_case_2 ]] # Or
 [[ ! test_condition ]] # Not
 
+# $? store last command return value
 # returns true if the command was successful without any errors
 [[ $? -eq 0 ]]
 # returns true if the command was not successful or had errors
@@ -470,13 +452,18 @@ hello DevDojo
 
 ------------
 # Scripting
-## Set command
+## `set` command
 Use to change shell properties and behaviour
-- `-e`: errexit : fast-failing : Exit immediately if a commands fail with non zero status
-- `-u`: nounset : Treat unset variable as an error and exit
-- `-o <option>` : enable option   `+o <option>` : disable option
-  - `pipefail`: return the exit status of last failed command
-  - `allexport`: Automatically export all variables as soon as they are defined
+
+Use `-` to set or enable a property and `+` to disable it.
+
+- `-e` or `-o errexit`: fast-failing : Exit immediately if a commands fail with non zero status
+- `-u`or `-o nounset` : Treat unset or undefined variable as an error when substituting (during parameter expansion). Does not apply to special parameters such as wildcard * or @
+- `-x` or `-o xtrace`: Prints out command arguments during execution
+
+- `-o pipefail`: return the exit status of last failed command
+- `-a` or `-o allexport`: Automatically export all variables and functions as soon as they are defined
+- `-b` or `-o notify`: Alerts the user upon background job termination
 
 ```bash
 set -euo pipefail;
@@ -486,3 +473,26 @@ set -o allexport
 source .env
 set +o allexport
 ```
+
+## `find` and `xargs`
+```bash
+# to onwn whole directory faster
+find . -not -user <user_to_exclude> -print | xargs --max-args=50 --max-procs=2 sudo chown <user_name>:<group>
+```
+
+## `export` command
+
+# Others
+- systemdctl
+- journalctl -u <unit_name>
+- `sudo su -`  <!-- #TODO explain this in detail -->
+- `mount a`
+- `tee`
+- `logger`
+- redirections
+  ```bash
+  >>
+  2>/dev/console
+  2>/dev/null
+  2>&1
+  ```

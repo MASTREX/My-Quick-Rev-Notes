@@ -35,6 +35,7 @@ Some of The Most Important SQL Commands
 - We will have to use the `IS NULL` and `IS NOT NULL` operators for null comparison
 - Input DATE as `#07/01/1996#` or `'1996-07-01'`
 - Group or aggregate functions should not be combined to single values or functions or ERROR is raised
+  TODO: give example
 - Single `=` is used for equalTo and `<>` or `!=` for not equalTo
 
 <br>
